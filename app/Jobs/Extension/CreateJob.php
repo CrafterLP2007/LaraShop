@@ -18,17 +18,23 @@ class CreateJob implements ShouldQueue
     public int $tries = 3;
     protected array $retryDelays = [60, 120];
 
-    public function __construct(public Order $order){}
+    public function __construct(public Order $order){
+        $this->tries = config('order.jobs.create.tries');
+        $this->retryDelays = config('order.jobs.create.delays');
+        $this->queue = config('order.jobs.create.queue');
+    }
 
     public function handle(): void
     {
         try {
-            $this->order->first()->extension()->first()->getClass()->create($this->order->user()->first(), $this->order->first());
-            
+            foreach ($this->order->first()->products as $product) {
+                $product->first()->extension()->first()->getClass()->create($this->order->first()->user()->first(), $this->order->first());
+            }
+
             $this->order->first()->update([
                 'status' => OrderStatus::Completed
             ]);
-            
+
             $this->delete();
         } catch (Exception $e) {
             if ($this->attempts() < $this->tries) {
@@ -38,7 +44,7 @@ class CreateJob implements ShouldQueue
                 $this->order->first()->update([
                     'status' => OrderStatus::Failed
                 ]);
-                
+
                 $this->fail($e);
             }
         }

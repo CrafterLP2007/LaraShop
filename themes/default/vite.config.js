@@ -1,28 +1,46 @@
-import { defineConfig } from 'vite'
-import laravel from 'laravel-vite-plugin'
-import path from 'path'
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
+import path from "path";
+import tailwindcss from "tailwindcss";
+
+
 
 export default defineConfig({
     plugins: [
         laravel({
             input: [
-                path.resolve(__dirname, 'js/app.js'),
-                path.resolve(__dirname, 'css/app.css')
+                "themes/default/css/app.css",
+                "themes/default/js/app.js"
             ],
-            buildDirectory: 'default/',
-            refresh: true
-        })
+            buildDirectory: "default",
+        }),
+        
+        
+        {
+            name: "blade",
+            handleHotUpdate({ file, server }) {
+                if (file.endsWith(".blade.php")) {
+                    server.ws.send({
+                        type: "full-reload",
+                        path: "*",
+                    });
+                }
+            },
+        },
     ],
+    resolve: {
+        alias: {
+            '@': '/themes/default/js',
+            
+        }
+    },
     css: {
         postcss: {
             plugins: [
                 tailwindcss({
-                    config: path.resolve(__dirname, 'tailwind.config.js')
+                    config: path.resolve(__dirname, "tailwind.config.js"),
                 }),
-                autoprefixer()
-            ]
-        }
-    }
-})
+            ],
+        },
+    },
+});

@@ -9,6 +9,16 @@ return new class extends Migration {
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->string('order_id')->unique();
+            $table->json('product_ids');
+            $table->string('status')->default('pending');
+            $table->float('price');
+            $table->float('discount_percentage')->default(0);
+            $table->string('address');
+            $table->string('city');
+            $table->string('state');
+            $table->string('zip_code');
             $table->timestamps();
         });
     }

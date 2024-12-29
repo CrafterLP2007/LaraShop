@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html
+    lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>{{ $title ?? 'Page Title' }}</title>
+    <title>{{ config("app.name")  }} | {{ $title ?? '' }}</title>
 
-        @vite(['themes/' . config('settings.active_theme') . '/js/app.js'], config('settings.active_theme'))
-    </head>
-    <body>
-        {{ $slot }}
-    </body>
+    @vite(['themes/default/css/app.css', 'themes/default/js/app.js'], 'default')
+    @livewireStyles
+    @livewireScripts
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+    {{ $slot }}
+</body>
 </html>

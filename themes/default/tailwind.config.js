@@ -1,16 +1,16 @@
-import path from 'path';
-import autoprefixer from 'autoprefixer';
-
 module.exports = {
     content: [
-        path.resolve(__dirname, "./**/*.{blade.php,js,vue,ts}"),
+        "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
+        "./storage/framework/views/*.php",
+        "./resources/views/**/*.blade.php",
+        "./themes/default/**/*.{blade.php,js,vue,ts}",
     ],
 
     theme: {
-        extend: {},
+        extend: {
+        },
     },
 
-    plugins: [
-        autoprefixer,
-    ],
+    plugins: [require("daisyui")],
+
 };

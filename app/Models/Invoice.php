@@ -9,8 +9,9 @@ class Invoice extends Model
 {
     protected $fillable = [
         'user_id',
-        'order_id',
-        'path',
+        'invoice_number',
+        'pdf_file',
+        'xml_file',
     ];
 
     public function user(): BelongsTo

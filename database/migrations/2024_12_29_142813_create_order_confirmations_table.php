@@ -7,17 +7,17 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('order_confirmations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->string('invoice_number')->unique();
-            $table->string('path');
+            $table->string('token');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('order_confirmations');
     }
 };

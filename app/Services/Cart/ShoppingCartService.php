@@ -11,7 +11,7 @@ class ShoppingCartService
 
     public function __construct()
     {
-        $this->items = Session::get('cart', []);
+        $this->items = Session::get('cart_items', []);
     }
 
     public function addProduct(Product $product, int $amount = 1): void
@@ -27,13 +27,11 @@ class ShoppingCartService
             ];
         }
 
-        Session::put('cart', ['cart_items' => $this->items]);
+        Session::put('cart_items', $this->items);
     }
 
-    public function removeProduct(Product $product, int $amount = 1): void
+    public function removeProduct(string $productId, int $amount = 1): void
     {
-        $productId = $product->id;
-
         if (isset($this->items[$productId])) {
             if ($this->items[$productId]['amount'] > $amount) {
                 $this->items[$productId]['amount'] -= $amount;
@@ -42,13 +40,13 @@ class ShoppingCartService
             }
         }
 
-        Session::put('cart', ['cart_items' => $this->items]);
+        Session::put('cart_items', $this->items);
     }
 
     public function clear(): void
     {
-        if (Session::has('cart')) {
-            Session::forget('cart');
+        if (Session::has('cart_items')) {
+            Session::forget('cart_items');
         }
     }
 

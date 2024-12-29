@@ -12,7 +12,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.5",
-        "realzone22/pengublade": "^0.1.2"
+        "qirolab/laravel-themer": "^2.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -33,7 +33,10 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "scripts": {
         "post-autoload-dump": [

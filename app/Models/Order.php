@@ -18,7 +18,6 @@ class Order extends Model
         'status',
         'price',
         'discount_percentage',
-        'extension',
         'address',
         'city',
         'state',
@@ -31,11 +30,6 @@ class Order extends Model
         'price' => 'float',
         'discount_percentage' => 'float',
     ];
-
-    public function extension(): BelongsTo
-    {
-        return $this->belongsTo(Extension::class);
-    }
 
     public function user(): BelongsTo
     {

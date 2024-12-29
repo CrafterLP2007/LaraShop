@@ -9,6 +9,14 @@ return new class extends Migration {
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->float('price');
+            $table->string('image');
+            $table->integer('stock')->default(-1);
+            $table->boolean('hidden')->default(false);
+            $table->foreignId('category_id')->constrained();
+            $table->string('extension');
             $table->timestamps();
         });
     }

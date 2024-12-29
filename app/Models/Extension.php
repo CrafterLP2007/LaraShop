@@ -15,12 +15,12 @@ class Extension extends Model
     public function getRows(): array
     {
         $rows = [];
-        $extensionPath = config('settings.extensions_path');
+        $extensionPath = config('extension.path');
         $extensions = File::allFiles($extensionPath);
 
         foreach ($extensions as $extension) {
             $fileName = pathinfo($extension->getFilename(), PATHINFO_FILENAME);
-            $className = "Extensions\\{$fileName}\\{$fileName}";
+            $className = config('extension.namespace') . "{$fileName}\\{$fileName}";
 
             if (class_exists($className) && $extension->getExtension() === 'php') {
                 try {
@@ -48,8 +48,8 @@ class Extension extends Model
     protected function getClassNameFromFile(string $filePath): string
     {
         $path = realpath($filePath);
-        $namespace = 'Modules\\Order\\Extensions\\';
-        $relativePath = str_replace(realpath(config('settings.extensions_path')) . DIRECTORY_SEPARATOR, '', $path);
+        $namespace = config('extension.namespace');
+        $relativePath = str_replace(realpath(config('extension.path')) . DIRECTORY_SEPARATOR, '', $path);
         $relativePath = trim($relativePath, DIRECTORY_SEPARATOR);
         $relativePath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $relativePath);
         return $namespace . str_replace([DIRECTORY_SEPARATOR, '.php'], ['\\', ''], $relativePath);
