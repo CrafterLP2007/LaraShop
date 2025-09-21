@@ -3,14 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasAvatar;
+use Filament\Models\Contracts\HasName;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, HasName, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -29,7 +34,6 @@ class User extends Authenticatable
         'city',
         'two_factor_enabled',
         'two_factor_secret',
-        'role'
     ];
 
     /**
@@ -55,8 +59,19 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin(): bool
+    public function canAccessPanel(Panel $panel): bool
     {
-        return false;
+        return true;
+        return $this->hasRole('admin');
+    }
+
+    public function getFilamentName(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        return "https://www.gravatar.com/avatar/" . md5($this->email) . "?s=500&d=mp";
     }
 }

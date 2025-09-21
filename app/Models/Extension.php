@@ -70,6 +70,7 @@ class Extension extends Model
     public function getRows(): array
     {
         $rows = [];
+        $loadedNames = [];
         $extensionPath = $this->config['path'];
         $cacheConfig = $this->config['cache'];
         $cacheEnabled = $cacheConfig['enabled'] ?? true;
@@ -80,14 +81,16 @@ class Extension extends Model
         $signature = md5(implode('|', array_map(fn($f) => $f->getFilename() . $f->getMTime(), $files)));
         $cacheKey = $cachePrefix . $signature;
 
+        /*
         if ($cacheEnabled && Cache::has($cacheKey)) {
             return Cache::get($cacheKey);
         }
+        */
 
         foreach ($files as $extension) {
             if ($extension->getExtension() === 'php') {
                 $fileName = pathinfo($extension->getFilename(), PATHINFO_FILENAME);
-                $className = $this->config['namespace'] . "{$fileName}\\{$fileName}";
+                $className = "Extensions\\{$fileName}\\{$fileName}";
 
                 if (class_exists($className)) {
                     try {
@@ -95,6 +98,13 @@ class Extension extends Model
                         $instance = new $className();
                         $meta = $this->getExtensionMetadata($instance);
                         $instance->boot($meta, []);
+
+                        $uniqueName = $meta['author'] . '_' . $fileName;
+
+                        if (in_array($uniqueName, $loadedNames, true)) {
+                            continue;
+                        }
+                        $loadedNames[] = $uniqueName;
 
                         $rows[] = $this->getExtensionMetadata($instance);
                     } catch (Exception $e) {

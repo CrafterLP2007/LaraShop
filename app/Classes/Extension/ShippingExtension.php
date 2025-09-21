@@ -23,7 +23,6 @@ abstract class ShippingExtension extends Extension
      *
      * @param Order $order The order instance to process.
      * @throws Exception If the creation fails.
-     * @return mixed
      */
     public abstract function create(Order $order): void;
 
@@ -36,20 +35,41 @@ abstract class ShippingExtension extends Extension
      *
      * @param Order $order The order instance to refund.
      * @throws Exception If the refund fails.
-     * @return mixed
      */
     public abstract function refund(Order $order): void;
 
     /**
-     * Cancels the specified order.
+     * Cancels the specified order or shipment.
      *
-     * This method should implement the logic required to cancel the given order,
-     * such as updating its status or notifying external services. If the cancellation
-     * fails, for example due to API errors or invalid order state, an Exception should be thrown.
+     * This method should implement the logic required to cancel the order or
+     * shipment associated with the given order. If the cancellation cannot be
+     * completed, for example due to API errors or invalid order state, an Exception should be thrown.
      *
      * @param Order $order The order instance to cancel.
      * @throws Exception If the cancellation fails.
-     * @return mixed
      */
     public abstract function cancel(Order $order): void;
+
+    /**
+     * Retrieves shipping details and current location of the product.
+     *
+     * This method should return information about the shipment, such as tracking number,
+     * carrier, estimated delivery date, and current location/status of the product.
+     * Implementations may fetch data from external APIs or internal records.
+     * You can return null if no shipping details are available.
+     *
+     * Example return array:
+     * [
+     *   'tracking_number' => '123456789',
+     *   'carrier' => 'DHL',
+     *   'estimated_delivery' => '2024-06-15',
+     *   'current_location' => 'Hamburg, DE',
+     *   'status' => 'In Transit',
+     * ]
+     *
+     * @param Order $order The order instance to get shipping details for.
+     * @throws Exception If shipping details cannot be retrieved.
+     * @return array|null
+     */
+    public abstract function getShippingDetails(Order $order): ?array;
 }

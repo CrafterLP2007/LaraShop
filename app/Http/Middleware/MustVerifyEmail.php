@@ -10,6 +10,12 @@ class MustVerifyEmail
 {
     public function handle(Request $request, Closure $next)
     {
+        $user = $request->user();
 
+        if ($user->hasRole('admin') || $user->hasVerifiedEmail()) {
+            return $next($request);
+        }
+
+        return Inertia::render('Auth/MustVerifyEmail');
     }
 }

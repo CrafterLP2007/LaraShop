@@ -10,7 +10,7 @@ return [
      * to any path you want. Make sure the path is correct and writable.
      *
      */
-    'path' => base_path('Extensions'),
+    'path' => base_path('extensions'),
 
     /**
      * --------------------------------------------------------------------------

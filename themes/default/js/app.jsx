@@ -1,6 +1,7 @@
 import './bootstrap';
 import {createInertiaApp} from "@inertiajs/react";
 import {createRoot} from "react-dom/client";
+import {HeroUIProvider} from "@heroui/react";
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -13,9 +14,11 @@ createInertiaApp({
     setup({el, App, props}) {
         const root = createRoot(el);
         root.render(
-            <main className="text-foreground bg-background">
-                <App {...props} />
-            </main>
+            <HeroUIProvider>
+                <main className="text-foreground bg-background">
+                    <App {...props} />
+                </main>
+            </HeroUIProvider>
         );
     },
     progress: {

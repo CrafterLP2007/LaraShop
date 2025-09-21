@@ -8,11 +8,13 @@
     "require": {
         "php": "^8.2",
         "calebporzio/sushi": "^2.5",
+        "filament/filament": "^4.0",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/reverb": "^1.6",
         "laravel/tinker": "^2.10.1",
         "qirolab/laravel-themer": "^2.4",
+        "spatie/laravel-permission": "^6.21",
         "tightenco/ziggy": "^2.6"
     },
     "require-dev": {
@@ -33,7 +35,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Extensions\\": "extensions/"
         },
         "files": [
             "app/helpers.php"
@@ -42,7 +45,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

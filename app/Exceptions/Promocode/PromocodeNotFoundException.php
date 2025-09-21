@@ -6,8 +6,8 @@ use Exception;
 
 class PromocodeNotFoundException extends Exception
 {
-    public function __construct()
+    public function __construct(string $promocode)
     {
-        parent::__construct('Promocode not found or inactive.');
+        parent::__construct("Promocode $promocode not found or inactive.");
     }
 }

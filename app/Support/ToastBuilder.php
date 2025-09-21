@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 class ToastBuilder
 {
     public string $id = '';
-    public string $variant = 'primary';
+    public string $variant = 'info';
     public string $title = '';
     public string $message = '';
     public bool $dismissible = true;
@@ -29,14 +29,9 @@ class ToastBuilder
         return new static($id);
     }
 
-    public function primary(): static
+    public function info(): static
     {
-        return $this->variant('primary');
-    }
-
-    public function secondary(): static
-    {
-        return $this->variant('secondary');
+        return $this->variant('info');
     }
 
     public function success(): static
