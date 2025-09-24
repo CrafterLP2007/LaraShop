@@ -57,6 +57,7 @@ class Extension extends Model
         }
 
         return [
+            'identifier' => strtoupper(substr($meta->author, 0, 1)) . '_' . strtoupper(substr($meta->name, 0, 1)),
             'name' => $meta->name,
             'description' => $meta->description,
             'version' => $meta->version,
@@ -91,6 +92,8 @@ class Extension extends Model
             if ($extension->getExtension() === 'php') {
                 $fileName = pathinfo($extension->getFilename(), PATHINFO_FILENAME);
                 $className = "Extensions\\{$fileName}\\{$fileName}";
+
+                require_once $extension->getPathname();
 
                 if (class_exists($className)) {
                     try {

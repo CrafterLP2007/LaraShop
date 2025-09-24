@@ -39,9 +39,13 @@ class ExtensionDiscoveryService
         $extensions = [];
         $identifiers = [];
         foreach ($files as $file) {
-            if ($file->getFilename() === 'Module.php') {
-                $className = $this->getClassNameFromFile($file->getPathname());
-                if ($className && class_exists($className)) {
+            if ($file->getExtension() === 'php') {
+                $fileName = pathinfo($file->getFilename(), PATHINFO_FILENAME);
+                $className = "Extensions\\{$fileName}\\{$fileName}";
+
+                require_once $file->getPathname();
+
+                if (class_exists($className)) {
                     $reflection = new ReflectionClass($className);
                     $attributes = $reflection->getAttributes(ExtensionMeta::class);
                     if (!empty($attributes)) {

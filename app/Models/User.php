@@ -69,7 +69,6 @@ class User extends Authenticatable implements FilamentUser, HasName, HasAvatar
     {
         return "{$this->first_name} {$this->last_name}";
     }
-
     public function getFilamentAvatarUrl(): ?string
     {
         return "https://www.gravatar.com/avatar/" . md5($this->email) . "?s=500&d=mp";

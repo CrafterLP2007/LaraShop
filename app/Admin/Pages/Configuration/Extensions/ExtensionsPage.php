@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Pages\Configuration;
+namespace App\Admin\Pages\Configuration\Extensions;
 
 use App\Models\Extension;
 use BackedEnum;
@@ -16,14 +16,14 @@ class ExtensionsPage extends Page
     protected static ?string $navigationLabel = 'Extensions';
     protected ?string $subheading = 'Manage your application extensions';
     protected static ?int $navigationSort = 1;
-    protected string $view = 'admin.pages.system.extensions';
+    protected string $view = 'admin.pages.configuration.extensions.list';
 
     public string $search = '';
     public ?string $selectedType = 'all';
 
-    public function getFilteredExtensions()
+    public function getFilteredExtensions(): array|Collection
     {
-        $extensions = Extension::query()
+        return Extension::query()
             ->when($this->search, fn($query) =>
             $query->where('name', 'like', "%{$this->search}%")
                 ->orWhere('author', 'like', "%{$this->search}%")
@@ -32,7 +32,5 @@ class ExtensionsPage extends Page
             $query->where('type', $this->selectedType)
             )
             ->get();
-
-        return $extensions;
     }
 }

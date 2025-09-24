@@ -13,6 +13,7 @@ class LogsPage extends Page
     protected static string|UnitEnum|null $navigationGroup = 'System';
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
     protected static ?string $navigationLabel = 'Logs';
+    protected ?string $subheading = 'View application log entries';
     protected static ?int $navigationSort = 3;
     protected string $view = 'admin.pages.system.logs';
 

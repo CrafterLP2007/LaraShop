@@ -11,10 +11,12 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('promocode_id');
             $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->timestamp('used_at')->useCurrent();
 
             $table->foreign('promocode_id')->references('id')->on('promocodes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('set null');
         });
     }
 

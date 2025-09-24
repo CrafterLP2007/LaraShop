@@ -36,10 +36,10 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
+            ->discoverResources(in: app_path('Admin/Resources'), for: 'App\Admin\Resources')
             ->discoverPages(in: app_path('Admin/Pages'), for: 'App\Admin\Pages')
             ->pages([
-                DashboardPage::class
+                DashboardPage::class,
             ])
             ->userMenuItems([
                 'exit' => MenuItem::make()

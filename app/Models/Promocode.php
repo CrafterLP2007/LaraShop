@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Enums\PromocodeType;
 use App\Exceptions\Promocode\PromocodeNotFoundException;
 use App\Exceptions\Promocode\PromocodeLimitExceededException;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Promocode extends Model
 {
@@ -16,10 +17,10 @@ class Promocode extends Model
         'expires_at',
         'active_at',
         'usage_limit',
-        'used_count',
         'product_ids',
         'user_ids',
         'max_count_per_user',
+        'active',
     ];
 
     protected $casts = [
@@ -30,6 +31,11 @@ class Promocode extends Model
         'user_ids' => 'array',
         'type' => PromocodeType::class,
     ];
+
+    public function redemptions(): HasMany|Promocode
+    {
+        return $this->hasMany(PromocodeUsage::class, 'promocode_id');
+    }
 
     public function isActive(): bool
     {
@@ -67,34 +73,5 @@ class Promocode extends Model
             return true;
         }
         return $this->getUserUsageCount($userId) < $this->max_count_per_user;
-    }
-
-    /**
-     * @throws PromocodeLimitExceededException
-     * @throws PromocodeNotFoundException
-     */
-    public function apply(int $userId, int $productId): bool
-    {
-        if (!$this->isActive() || !$this->isValidForProduct($productId) || !$this->isValidForUser($userId) || !$this->canUserUsePromocode($userId)) {
-            throw new PromocodeNotFoundException();
-        }
-
-        if (
-            ($this->usage_limit !== null && $this->used_count >= $this->usage_limit) ||
-            (!$this->isUnlimitedPerUser() && $this->getUserUsageCount($userId) >= $this->max_count_per_user)
-        ) {
-            throw new PromocodeLimitExceededException();
-        }
-
-        $this->used_count++;
-        $this->save();
-
-        PromocodeUsage::create([
-            'promocode_id' => $this->id,
-            'user_id' => $userId,
-            'used_at' => now(),
-        ]);
-
-        return true;
     }
 }
