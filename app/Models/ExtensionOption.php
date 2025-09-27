@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ExtensionOption extends Model
 {
     protected $fillable = [
-        'extension_name',
+        'extension_identifier',
         'key',
         'value'
     ];

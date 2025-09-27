@@ -1,23 +1,18 @@
 <?php
 
-namespace App\Admin\Pages\Configuration\Extensions;
+namespace App\Admin\Resources\Extensions\Pages;
 
+use App\Admin\Resources\Extensions\ExtensionsResource;
 use App\Models\Extension;
-use BackedEnum;
-use Filament\Pages\Page;
+use Filament\Actions\CreateAction;
+use Filament\Panel;
+use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Collection;
-use UnitEnum;
 
-class ExtensionsPage extends Page
+class ListExtensions extends ListRecords
 {
-    protected static ?string $title = 'Extensions';
-    protected static string|UnitEnum|null $navigationGroup = 'Configurations';
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-puzzle-piece';
-    protected static ?string $navigationLabel = 'Extensions';
-    protected ?string $subheading = 'Manage your application extensions';
-    protected static ?int $navigationSort = 1;
+    protected static string $resource = ExtensionsResource::class;
     protected string $view = 'admin.pages.configuration.extensions.list';
-
     public string $search = '';
     public ?string $selectedType = 'all';
 

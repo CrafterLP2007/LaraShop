@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Extension;
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\Models\Permission;
+use App\Enums\Permission as PermissionEnum;
 
 class AppServiceProvider extends ServiceProvider
 {

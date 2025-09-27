@@ -13,7 +13,24 @@ class Test extends ShippingExtension
 {
     public function options(): array
     {
-        return [];
+        return [
+            [
+                'name' => 'stripe_secret_key',
+                'label' => 'Stripe Restricted key',
+                'placeholder' => 'Enter your Stripe Restricted API key',
+                'type' => 'text',
+                'description' => 'Find your API keys at https://dashboard.stripe.com/apikeys',
+                'required' => true,
+            ],
+            [
+                'name' => 'stripe_publishable_key',
+                'label' => 'Stripe Publishable Key',
+                'placeholder' => 'Enter your Stripe Publishable API key',
+                'type' => 'text',
+                'description' => 'Find your API keys at https://dashboard.stripe.com/apikeys',
+                'required' => true,
+            ],
+        ];
     }
 
     public function create(Order $order): void

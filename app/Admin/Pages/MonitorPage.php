@@ -12,4 +12,5 @@ class MonitorPage extends Page
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
     protected static ?string $navigationLabel = 'Monitor';
     protected static ?int $navigationSort = 2;
+    protected static ?string $slug = 'monitor';
 }

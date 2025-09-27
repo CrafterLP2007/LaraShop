@@ -10,13 +10,14 @@
         "calebporzio/sushi": "^2.5",
         "filament/filament": "^4.0",
         "inertiajs/inertia-laravel": "^2.0",
+        "joaopaulolndev/filament-pdf-viewer": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/reverb": "^1.6",
         "laravel/tinker": "^2.10.1",
         "qirolab/laravel-themer": "^2.4",
         "spatie/laravel-permission": "^6.21",
-        "tightenco/ziggy": "^2.6",
-        "tomatophp/filament-users": "^4.0"
+        "tapp/filament-country-code-field": "^2.0",
+        "tightenco/ziggy": "^2.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

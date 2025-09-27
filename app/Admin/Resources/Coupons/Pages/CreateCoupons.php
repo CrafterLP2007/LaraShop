@@ -3,7 +3,9 @@
 namespace App\Admin\Resources\Coupons\Pages;
 
 use App\Admin\Resources\Coupons\CouponsResource;
+use App\Models\Product;
 use App\Models\User;
+use Filament\Forms\Components\Checkbox;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
@@ -98,13 +100,11 @@ class CreateCoupons extends CreateRecord
                         ->helperText('Restrict coupon to specific products')
                         ->multiple()
                         ->searchable()
-                        ->options([
-                            101 => 'Product A',
-                            102 => 'Product B',
-                            103 => 'Product C',
-                        ]),
+                        ->options(function () {
+                            return Product::all()->pluck('name', 'id');
+                        }),
 
-                    Toggle::make('active')
+                    Checkbox::make('active')
                         ->label('Active Status')
                         ->default(true),
                 ]),

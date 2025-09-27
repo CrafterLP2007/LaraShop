@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('extension_options', function (Blueprint $table) {
             $table->id();
-            $table->string('extension_name');
+            $table->string('extension_identifier');
             $table->string('key');
             $table->text('value');
             $table->timestamps();

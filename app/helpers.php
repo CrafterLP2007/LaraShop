@@ -74,14 +74,32 @@ if (!function_exists("theme_path")) {
 }
 
 if (!function_exists("extensions_path")) {
-    function extensions_path(string $extension, string $path = ''): ?string
+    function extensions_path(string $extension = '', string $path = ''): ?string
     {
-        $extensionPath =  rtrim(config('extension.path'), '/') . '/' . ltrim($extension, '/');
+        if (!$extension) {
+            return rtrim(config('extension.path'), '/');
+        }
+
+        $extensionPath = rtrim(config('extension.path'), '/') . '/' . ltrim($extension, '/');
 
         if (!$path) {
             return $extensionPath;
         }
 
         return $extensionPath . '/' . ltrim($path, '/');
+    }
+}
+
+if (!function_exists("theme_config")) {
+    function theme_config($theme = '')
+    {
+        $theme = $theme ?: theme();
+        $configPath = theme_path('theme.php');
+
+        if (file_exists($configPath)) {
+            return include $configPath;
+        }
+
+        return null;
     }
 }

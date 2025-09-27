@@ -4,6 +4,7 @@ namespace App\Admin\Resources\Coupons\Tables;
 
 use App\Enums\PromocodeType;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -59,9 +60,7 @@ class CouponsTable
                     ->dateTime(),
 
                 BooleanColumn::make('active')
-                    ->label('Active')
-                    ->trueIcon('heroicon-o-check')
-                    ->falseIcon('heroicon-o-x-mark'),
+                    ->label('Active'),
 
                 TextColumn::make('usage_limit')
                     ->label('Usage Limit')
@@ -87,9 +86,10 @@ class CouponsTable
 
             ])
             ->recordActions([
-                EditAction::make(),
                 ViewAction::make()
                     ->url(fn($record) => route('filament.admin.resources.coupons.view', ['record' => $record])),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

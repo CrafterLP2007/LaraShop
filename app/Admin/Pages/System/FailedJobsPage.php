@@ -20,7 +20,7 @@ class FailedJobsPage extends Page implements HasTable
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-exclamation-triangle';
     protected static ?string $navigationLabel = 'Failed Jobs';
     protected ?string $subheading = 'View and manage failed jobs';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
     protected string $view = "admin.pages.system.failed-jobs";
 
     public function getTableQuery(): Builder

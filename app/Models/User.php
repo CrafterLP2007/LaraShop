@@ -34,6 +34,7 @@ class User extends Authenticatable implements FilamentUser, HasName, HasAvatar
         'city',
         'two_factor_enabled',
         'two_factor_secret',
+        'disabled',
     ];
 
     /**

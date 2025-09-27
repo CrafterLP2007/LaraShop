@@ -2,7 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Admin\Pages\Configuration\UsersPage;
 use App\Admin\Pages\DashboardPage;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -37,7 +36,9 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Admin/Resources'), for: 'App\Admin\Resources')
+            ->discoverResources(in: extensions_path(), for: 'App\\Extensions\\')
             ->discoverPages(in: app_path('Admin/Pages'), for: 'App\Admin\Pages')
+            ->discoverPages(in: extensions_path(), for: 'App\\Extensions\\')
             ->pages([
                 DashboardPage::class,
             ])

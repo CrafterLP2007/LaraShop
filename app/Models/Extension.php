@@ -57,7 +57,7 @@ class Extension extends Model
         }
 
         return [
-            'identifier' => strtoupper(substr($meta->author, 0, 1)) . '_' . strtoupper(substr($meta->name, 0, 1)),
+            'identifier' => md5(strtolower($meta->author . ':' . $meta->name)),
             'name' => $meta->name,
             'description' => $meta->description,
             'version' => $meta->version,
@@ -134,6 +134,26 @@ class Extension extends Model
         return null;
     }
 
+    public function getConfiguration(): array
+    {
+        $class = $this->getClass();
+        if (!$class || !method_exists($class, 'options')) {
+            return [];
+        }
+
+        $options = $class->options();
+        $optionValues = ExtensionOption::where('extension_identifier', $this->identifier)
+            ->pluck('value', 'key')
+            ->toArray();
+
+        foreach ($options as &$option) {
+            $key = $option['name'];
+            $option['value'] = $optionValues[$key] ?? '';
+        }
+
+        return $options;
+    }
+
     public static function reload(): void
     {
         Cache::forget('extensions');
@@ -142,5 +162,10 @@ class Extension extends Model
         $rows = $instance->getRows();
         $instance->setRows($rows);
         $instance->save();
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'identifier';
     }
 }

@@ -13,7 +13,7 @@ class UpdatePage extends Page
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-up-circle';
     protected static ?string $navigationLabel = 'Update';
     protected ?string $subheading = "Update your application to the latest version.";
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 3;
     protected string $view = 'admin.pages.system.update';
 
     public function getViewData(): array

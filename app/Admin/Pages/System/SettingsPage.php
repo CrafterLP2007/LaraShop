@@ -25,7 +25,7 @@ class SettingsPage extends Page implements HasForms
     protected static string|UnitEnum|null $navigationGroup = 'System';
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog';
     protected static ?string $navigationLabel = 'Settings';
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 2;
 
     protected string $view = 'admin.pages.system.settings';
 

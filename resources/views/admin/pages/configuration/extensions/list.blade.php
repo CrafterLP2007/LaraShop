@@ -36,7 +36,9 @@
     @if($this->getFilteredExtensions()->count() === 0)
         <p class="text-center"></p>
         <div class="text-center text-gray-500">
-            No extensions found {{ $this->search ? 'for "' . $this->search . '"' : '' }} {{ $this->selectedType !== 'all' ? 'in type "' . str($this->selectedType)->title() . '"' : '' }}.
+            No extensions
+            found {{ $this->search ? 'for "' . $this->search . '"' : '' }} {{ $this->selectedType !== 'all' ? 'in type "' . str($this->selectedType)->title() . '"' : '' }}
+            .
         </div>
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -113,9 +115,11 @@
                     </div>
 
                     <x-filament::button
-                        icon="heroicon-o-cog"
-                        :href="$extension->settingsUrl"
-                        class="w-full mt-6"
+                            icon="heroicon-o-cog"
+                            :href="route('filament.admin.resources.extensions.edit', ['record' => $extension->identifier])"
+                            wire:navigate
+                            tag="a"
+                            class="w-full mt-6"
                     >
                         Configure
                     </x-filament::button>

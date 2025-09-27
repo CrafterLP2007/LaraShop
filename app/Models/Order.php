@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\OrderStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Order extends Model
 {
@@ -23,4 +24,9 @@ class Order extends Model
     protected $casts = [
         'status' => OrderStatus::class,
     ];
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'order_product', 'order_id', 'product_id');
+    }
 }

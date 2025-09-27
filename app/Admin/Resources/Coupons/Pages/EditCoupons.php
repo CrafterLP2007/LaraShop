@@ -3,8 +3,10 @@
 namespace App\Admin\Resources\Coupons\Pages;
 
 use App\Admin\Resources\Coupons\CouponsResource;
+use App\Models\Product;
 use App\Models\User;
 use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -89,13 +91,11 @@ class EditCoupons extends EditRecord
                 ->helperText('Restrict coupon to specific products')
                 ->multiple()
                 ->searchable()
-                ->options([
-                    101 => 'Product A',
-                    102 => 'Product B',
-                    103 => 'Product C',
-                ]),
+                ->options(function () {
+                    return Product::all()->pluck('name', 'id');
+                }),
 
-            Toggle::make('active')
+            Checkbox::make('active')
                 ->label('Active Status')
                 ->default(true),
         ]);
