@@ -46,13 +46,11 @@ class EditCoupons extends EditRecord
                 ->label('Start Date')
                 ->helperText('When should the coupon become active')
                 ->default(now())
-                ->required()
                 ->native(false),
 
             DateTimePicker::make('expires_at')
                 ->label('Expiry Date')
                 ->helperText('When should the coupon expire')
-                ->required()
                 ->native(false),
 
             TextInput::make('usage_limit')

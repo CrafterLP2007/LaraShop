@@ -9,7 +9,6 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Resources\Pages\ViewRecord;
 use Filament\Schemas\Schema;
 
 class EditExtension extends EditRecord
